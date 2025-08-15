@@ -1,4 +1,5 @@
 package com.pdm.quiz
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,18 @@ class MainActivity : AppCompatActivity() {
         quizModelList = mutableListOf()
         setupRecyclerView()
         getDataFromFirebase()
+
+        // Botão para Ranking
+        binding.rankBtn.setOnClickListener {
+            val intent = Intent(this, RankingActivity::class.java)
+            startActivity(intent)
+        }
+
+        /* Botão para Histórico
+        binding.statsBtn.setOnClickListener {
+            val intent = Intent(this, StatsActivity::class.java)
+            startActivity(intent)
+        }*/
     }
 
     private fun setupRecyclerView() {
@@ -26,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
     }
 
-    // Utilizando dados falsos
+    // Utilizando dados de teste
     private fun getDataFromFirebase() {
         val listQuestionModel = mutableListOf<QuestionModel>()
         listQuestionModel.add(QuestionModel("Qual o diretor de Star Wars?", mutableListOf("1","Resposta Certa","3","4"), "Resposta Certa"))
