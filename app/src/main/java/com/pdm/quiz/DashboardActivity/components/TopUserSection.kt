@@ -1,4 +1,4 @@
-package com.pdm.quiz.Dashboard.components
+package com.pdm.quiz.DashboardActivity.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pdm.quiz.R
-import java.nio.file.WatchEvent
 
 
 /* Descrição do componente:
@@ -45,41 +44,9 @@ fun TopUserSection(){
         Spacer(modifier = Modifier.width(width = 16.dp))
 
         Text(
-            text="Oii, Rayane",
+            text = "Bem-vindo(a), Rayane!",
             fontSize = 20.sp,
             modifier = Modifier.weight(weight = 1f)
         )
-        Row(
-            modifier = Modifier
-                .height(40.dp)
-                .background(
-                    color = colorResource(R.color.navy_blue),
-                    shape = RoundedCornerShape(size = 10.dp)
-                )
-                .padding(horizontal = 8.dp, vertical = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Image(
-                painter = painterResource(id = R.drawable.garnet),
-                contentDescription = null,
-                modifier = Modifier.size(20.dp)
-                )
-
-            Spacer(modifier = Modifier.width(width = 16.dp))
-
-            Text(
-                text = "2400",
-                color = colorResource(id = R.color.white)
-            )
-
-            Spacer(modifier = Modifier.width(width = 8.dp))
-
-            Image(
-                painter = painterResource(id =  R.drawable.plus),
-                contentDescription = null,
-                modifier = Modifier.size(20.dp)
-            )
-
-        }
     }
 }

@@ -1,15 +1,17 @@
-package com.pdm.quiz.Dashboard.components
+package com.pdm.quiz.DashboardActivity.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,11 +20,58 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.pdm.quiz.R
 
+@Preview
+@Composable
+fun GameModeButtons(onSinglePlayerClick:()-> Unit = {}){
+    Column {
+        Text(
+            text = "Iniciar novo Quiz",
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            fontSize = 20.sp,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+                .height(145.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            GameButton(
+                backgroundColor = R.color.blue,
+                iconRes = R.drawable.btn1,
+                text = "Cinema",
+                modifier = Modifier
+                    .weight(1f)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            GameButton(
+                backgroundColor = R.color.purple,
+                iconRes = R.drawable.btn2,
+                text = "História",
+                modifier = Modifier
+                    .weight(1f)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            GameButton(
+                backgroundColor = R.color.orange,
+                iconRes = R.drawable.btn3,
+                text = "Ciências",
+                modifier = Modifier
+                    .weight(1f)
+            )
+        }
+    }
+}
 @Composable
 fun GameButton(
     backgroundColor: Int,
@@ -57,7 +106,7 @@ fun GameButton(
     }
 }
 
-@Preview
+//@Preview
 @Composable
 fun GameButtonPreview() {
     GameButton(
