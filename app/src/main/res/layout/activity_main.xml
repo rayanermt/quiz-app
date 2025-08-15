@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/purple"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="🎲 Super Quiz"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teste seus conhecimentos enquanto compete com seus amigos!"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_margin="16dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+
+    <!-- Lista de Quizzes -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Escolha seu jogo:"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="4dp"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ProgressBar
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:id="@+id/progress_bar"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:id="@+id/recycler_view"/>
+
+    </RelativeLayout>
+
+    <!-- Botões de Navegação -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_marginBottom="64dp">
+
+        <Button
+            android:id="@+id/rank_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:backgroundTint="@color/purple_200"
+            android:textColor="@color/white"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="12dp"
+            android:text="Ranking"
+            android:layout_weight="0.5"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/stats_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:backgroundTint="@color/purple_200"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="12dp"
+            android:text="Histórico"
+            android:textColor="@color/white"
+            android:layout_weight="0.5"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Desenvolvido por Gabriel Paiva, Pedro Henrique Lopes e Rayane Reis"
+        android:textAlignment="center"
+        android:textColor="@color/grey_800"/>
+
+</LinearLayout>

@@ -12,10 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quizapp">
         <activity
+            android:name=".QuizActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+
+        <activity android:name=".RankingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>/>
+
+        <!--  <activity android:name=".HistoricoActivity" /> -->
+
+        <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Quizapp">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
