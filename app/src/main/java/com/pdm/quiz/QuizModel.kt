@@ -1,19 +1,20 @@
 package com.pdm.quiz
 
-data class QuizModel(
-    val id : String,
-    val title : String,
-    val subtitle : String,
-    val time : String,
-    val questionList : List<QuestionModel>
-){
-    constructor() : this("","","","", emptyList())
-}
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class QuestionModel(
-    val question : String,
-    val options : List<String>,
-    val correct : String,
-){
-    constructor() : this ("", emptyList(),"")
-}
+// Anotação para permitir passar a lista de questões entre Activities
+@Parcelize
+data class QuizCategory(
+    var id: String = "",
+    var name: String = "",
+    var questions: List<Question> = emptyList()
+) : Parcelable
+
+@Parcelize
+data class Question(
+    var id: String = "",
+    var text: String = "",
+    var options: List<String> = emptyList(),
+    var correctIndex: Int = 0 // Agora usamos o índice da resposta correta
+) : Parcelable

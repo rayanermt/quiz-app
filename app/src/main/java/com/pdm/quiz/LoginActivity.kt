@@ -1,6 +1,5 @@
 package com.pdm.quiz
 
-import com.pdm.quiz.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,6 +13,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.pdm.quiz.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -37,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        // Registra o callback para o resultado da tela de login do Google
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
@@ -50,7 +50,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // Ação do botão de login
         binding.loginBtn.setOnClickListener {
             signIn()
         }
@@ -58,7 +57,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        // Verifica se o usuário já está logado e o redireciona
         if (auth.currentUser != null) {
             navigateToMainActivity()
         }
@@ -78,18 +76,74 @@ class LoginActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
                 binding.loginBtn.visibility = View.VISIBLE
                 if (task.isSuccessful) {
-                    // Login bem-sucedido, navega para a tela principal
-                    navigateToMainActivity()
+                    // Login bem-sucedido, agora salva/atualiza o perfil do usuário
+                    saveUserProfile() // <-- CHAMADA DA NOVA FUNÇÃO
                 } else {
-                    // Se o login falhar, mostra uma mensagem
                     Toast.makeText(this, "Falha na autenticação com Firebase.", Toast.LENGTH_SHORT).show()
                 }
+            }
+    }
+
+    // NOVA FUNÇÃO para salvar o perfil do usuário no Firestore
+    private fun saveUserProfile() {
+        val firebaseUser = auth.currentUser ?: run {
+            // Sem usuário autenticado — segue o fluxo do app como você preferir
+            navigateToMainActivity()
+            return
+        }
+
+        val db = FirebaseFirestore.getInstance()
+        val docRef = db.collection("users").document(firebaseUser.uid)
+
+        // Campos que PODEM ser atualizados a partir do FirebaseUser
+        val incoming = mutableMapOf<String, Any>()
+        firebaseUser.displayName?.let { incoming["displayName"] = it }
+
+        db.runTransaction { txn ->
+            val snap = txn.get(docRef)
+
+            if (!snap.exists()) {
+                // --- CRIAÇÃO ---
+                // createdAt será preenchido pelo servidor por causa do @ServerTimestamp
+                val newUser = User(
+                    uid = firebaseUser.uid,
+                    displayName = firebaseUser.displayName ?: "Usuário",
+                    totalScore = 0,         // padrão para novo usuário
+                )
+                txn.set(docRef, newUser)   // cria doc com padrão
+            } else {
+                // --- ATUALIZAÇÃO ---
+                // Atualiza SOMENTE o que veio no 'incoming' (se houver algo)
+                if (incoming.isNotEmpty()) {
+                    // Opcional: evitar writes desnecessários comparando com o existente
+                    val current = snap.toObject(User::class.java)
+                    val diff = mutableMapOf<String, Any>()
+                    incoming.forEach { (k, v) ->
+                        val currentVal = when (k) {
+                            "displayName" -> current?.displayName
+                            else          -> null
+                        }
+                        if (currentVal != v) diff[k] = v
+                    }
+                    if (diff.isNotEmpty()) txn.update(docRef, diff)
+                }
+                // Importante: não tocamos em totalScore nem em createdAt -> preservados
+            }
+            null
+        }
+            .addOnSuccessListener {
+                navigateToMainActivity()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Erro ao salvar perfil.", Toast.LENGTH_SHORT).show()
+                // Mesmo com falha, permite que o usuário entre no app
+                navigateToMainActivity()
             }
     }
 
     private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish() // Finaliza a LoginActivity para que o usuário não possa voltar a ela
+        finish()
     }
 }

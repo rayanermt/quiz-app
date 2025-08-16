@@ -5,31 +5,28 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.quiz.databinding.RankingItemRecyclerRowBinding
 
-data class RankingItem(val position: Int, val name: String, val score: Int)
+class RankingAdapter(private val userList: List<User>) :
+    RecyclerView.Adapter<RankingAdapter.MyViewHolder>() {
 
-class RankingAdapter(private var rankingList: MutableList<RankingItem>) :
-    RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() {
+    class MyViewHolder(private val binding: RankingItemRecyclerRowBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(user: User, position: Int) {
+            binding.rankingPositionText.text = "${position + 1}º"
+            binding.rankingNameText.text = user.displayName
+            binding.rankingScoreText.text = "${user.totalScore} pts"
+        }
+    }
 
-    inner class RankingViewHolder(val binding: RankingItemRecyclerRowBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = RankingItemRecyclerRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RankingViewHolder(binding)
+        return MyViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RankingViewHolder, position: Int) {
-        val item = rankingList[position]
-        holder.binding.tvPosition.text = item.position.toString()
-        holder.binding.tvName.text = item.name
-        holder.binding.tvScore.text = item.score.toString()
+    override fun getItemCount(): Int {
+        return userList.size
     }
 
-    override fun getItemCount() = rankingList.size
-
-    fun updateData(newList: List<RankingItem>) {
-        rankingList.clear()
-        rankingList.addAll(newList)
-        notifyDataSetChanged()
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.bind(userList[position], position)
     }
 }

@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp"
-    android:gravity="center_vertical"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/tvPosition"
-        android:layout_width="40dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:textStyle="bold" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <!--Substituir por imagem da pessoa, se possível-->
-    <ImageView
-        android:id="@+id/imgAvatar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="12dp"
-        android:src="@drawable/ic_person"
-        android:contentDescription="" />
+        <TextView
+            android:id="@+id/ranking_position_text"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="1º"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Nome do Jogador"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/ranking_name_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Nome do Jogador"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tvScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🏆 1500"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/ranking_score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1500 pts"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-</LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

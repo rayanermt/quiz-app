@@ -46,7 +46,6 @@ android {
 
 dependencies {
 
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -61,6 +60,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,15 +72,18 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
     implementation("io.coil-kt:coil-compose:2.5.0")
 
-    //Autenticação
+    //Autenticação Firebase/Google
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation("com.google.android.gms:play-services-auth:21.2.0")
 
+    //Autenticação Firestore
+    // Esta é a linha correta e já estava aqui. Mantemos ela.
+    implementation(libs.firebase.firestore.ktx)
+
     // Appcompat
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("androidx.appcompat:appcompat-resources:1.7.1")
-
     implementation ("com.google.android.material:material:1.10.0")
 }
