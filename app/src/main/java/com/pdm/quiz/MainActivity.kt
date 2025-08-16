@@ -1,9 +1,13 @@
 package com.pdm.quiz
+
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+// Importações necessárias para o Google Sign-In
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.pdm.quiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,17 +24,40 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         getDataFromFirebase()
 
+        // --- INÍCIO DA LÓGICA DE LOGOUT ATUALIZADA ---
+
+        // 1. Configura o cliente do Google Sign-In para poder deslogar
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        binding.logoutBtn.setOnClickListener {
+            // 2. Faz o logout da Conta Google no dispositivo
+            googleSignInClient.signOut().addOnCompleteListener {
+                // 3. Faz o logout do Firebase
+                FirebaseAuth.getInstance().signOut()
+
+                // 4. Redireciona para a tela de login
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+        }
+        // --- FIM DA LÓGICA DE LOGOUT ATUALIZADA ---
+
         // Botão para Ranking
         binding.rankBtn.setOnClickListener {
             val intent = Intent(this, RankingActivity::class.java)
             startActivity(intent)
         }
 
-        /* Botão para Histórico
+        // Sua lógica original para o botão de histórico está aqui, caso precise
         binding.statsBtn.setOnClickListener {
-            val intent = Intent(this, StatsActivity::class.java)
-            startActivity(intent)
-        }*/
+            // Lógica do botão de histórico
+        }
     }
 
     private fun setupRecyclerView() {
@@ -39,7 +66,6 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
     }
 
-    // Utilizando dados de teste
     private fun getDataFromFirebase() {
         val listQuestionModel = mutableListOf<QuestionModel>()
         listQuestionModel.add(QuestionModel("Qual o diretor de Star Wars?", mutableListOf("1","Resposta Certa","3","4"), "Resposta Certa"))
@@ -50,6 +76,6 @@ class MainActivity : AppCompatActivity() {
         quizModelList.add(QuizModel("2", "História", "Descrição do Quiz de Hostória", "10", emptyList()))
         quizModelList.add(QuizModel("3", "Ciências", "Descrição do Quiz de Ciências", "15", emptyList()))
 
-        setupRecyclerView()
+        adapter.notifyDataSetChanged()
     }
 }
