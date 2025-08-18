@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".QuizActivity">
+    tools:context=".presentation.quiz.QuizActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -144,13 +144,3 @@
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>
-
-
-
-
-
-
-
-
-
-
