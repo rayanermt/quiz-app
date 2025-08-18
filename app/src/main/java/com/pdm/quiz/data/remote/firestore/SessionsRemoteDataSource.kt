@@ -3,6 +3,7 @@ package com.pdm.quiz.data.remote.firestore
 
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.pdm.quiz.data.remote.dto.QuizResultDto
 import com.pdm.quiz.utils.getMillis
@@ -32,7 +33,7 @@ class SessionsRemoteDataSource(private val db: FirebaseFirestore) {
     suspend fun history(uid: String): List<QuizResultDto> {
         val snap = users().document(uid)
             .collection("quiz_history")
-            .orderBy("completedAt")
+            .orderBy("completedAt", Query.Direction.DESCENDING)
             .get().await()
 
         return snap.documents.map { d ->

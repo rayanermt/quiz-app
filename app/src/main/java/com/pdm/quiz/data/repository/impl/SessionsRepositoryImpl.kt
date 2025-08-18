@@ -53,13 +53,13 @@ class SessionsRepositoryImpl(
 
     override suspend fun getUserHistory(): Result<List<SessionItem>> = runCatching {
         val uid = auth.currentUser?.uid ?: error("No user logged")
-        sessionDao.history(uid).map {
+        remote.history(uid).map {
             SessionItem(
                 quizName = it.quizName,
                 correctCount = it.correctCount,
                 total = it.total,
                 durationMs = it.durationMs,
-                completedAtMs = it.endedAtMs
+                completedAtMs = it.completedAtMs
             )
         }
     }
