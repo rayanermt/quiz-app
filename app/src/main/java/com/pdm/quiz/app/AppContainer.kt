@@ -20,7 +20,9 @@ import com.pdm.quiz.domain.repository.UsersRepository
 
 class AppContainer(context: Context) {
     private val auth = FirebaseAuth.getInstance()
+
     private val firestore = FirebaseFirestore.getInstance()
+
     private val db = Room.databaseBuilder(context, QuizDatabase::class.java, "quiz.db")
         .fallbackToDestructiveMigration()
         .build()

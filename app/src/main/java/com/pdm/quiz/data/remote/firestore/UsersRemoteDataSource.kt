@@ -17,7 +17,8 @@ class UsersRemoteDataSource(
             val nowUser = if (snap.exists()) {
                 val old = snap.toObject(UserDto::class.java)
                 user.copy(
-                    createdAtMs = old?.createdAtMs ?: user.createdAtMs
+                    createdAtMs = old?.createdAtMs ?: user.createdAtMs,
+                    totalScore = old?.totalScore ?: user.totalScore
                 )
             } else {
                 user
