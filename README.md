@@ -2,6 +2,17 @@
 
 Aplicativo Android de perguntas e respostas com autenticação via Google/Firebase, sincronização de questões e histórico local com Room. Desenvolvido em equipe para a disciplina de Programação para Dispositivos Móveis (PDM) — FACOM/UFU.
 
+## 📦 Entregáveis
+
+Os arquivos entregáveis estão na pasta deliverable/ na raiz do repositório:
+```
+deliverable
+├── cronograma.pdf
+├── quiz-app.apk
+├── relatório.pdf
+└── slides.pdf
+```
+
 ## 📱 Visão geral
 
 * **Login e autenticação**: Google Sign-In (Firebase Auth).
