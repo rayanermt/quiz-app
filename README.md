@@ -10,8 +10,11 @@ deliverable
 ├── cronograma.pdf
 ├── quiz-app.apk
 ├── relatório.pdf
-└── slides.pdf
+├── slides.pdf
+└── vídeo.mp4
 ```
+
+---
 
 ## 📱 Visão geral
 
